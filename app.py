@@ -43,7 +43,7 @@ def retrieve_context(query: str, num_results: int = 3):
     return "\n".join(contexts)
 
 # 2. Setup the LLM
-llm = ChatDatabricks(endpoint="meta_llama_v3_1_8b")
+llm = ChatDatabricks(endpoint="databricks-meta-llama-3-1-8b-instruct")
 
 # 3. Streamlit UI
 st.title("My RAG Chatbot")
