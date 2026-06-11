@@ -16,10 +16,8 @@ workspace_url = f"https://{w.config.host}"
 
 # 3. Initialize AISearchClient using the host and the client's token provider
 # This avoids manual credential management
-vsc = AISearchClient(
-    workspace_url=workspace_url,
-    token=w.config.token
-)
+vsc = AISearchClient()
+
 vector_search_index = vsc.get_index(
     endpoint_name="my_vector_search_endpoint",
     index_name="gg_test.dev.my_text_index"
