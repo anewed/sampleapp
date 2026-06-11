@@ -43,7 +43,7 @@ def retrieve_context(query: str, num_results: int = 3):
     return "\n".join(contexts)
 
 # 2. Setup the LLM
-llm = ChatDatabricks(endpoint="my_vector_search_endpoint")
+llm = ChatDatabricks(endpoint="meta_llama_v3_1_8b")
 
 # 3. Streamlit UI
 st.title("My RAG Chatbot")
