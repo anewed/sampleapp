@@ -1,1 +1,5 @@
+# app.yml
+env:
+  - name: VECTOR_SEARCH_INDEX
+    valueFrom: vector-search-index  # This matches the resource key from Step 1
 command: ['streamlit', 'run', 'app.py']
