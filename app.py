@@ -19,16 +19,26 @@ def retrieve_context(query: str, num_results: int = 3):
         index_name=INDEX_NAME,
         query_text=query,
         num_results=num_results,
-        columns=["text"]  # Retrieve only the text column
+        columns=["text"]  # We explicitly request the text column
     )
     
-    # Extract page contents from the results
     contexts = []
+    
     if results.result and results.result.data_array:
+        # 1. Map columns by finding where 'text' is in the returned manifest
+        columns = [col.name for col in results.manifest.columns]
+        
+        try:
+            text_index = columns.index("text")
+        except ValueError:
+            # Fallback if "text" is not in manifest column names (use 0 as a default guess)
+            text_index = 0
+
+        # 2. Extract values and force them to string format
         for row in results.result.data_array:
-            # Depending on how your index was built, row[0] or row[1] contains the text.
-            # Usually the returned columns match the order in results.manifest.columns.
-            contexts.append(row[1]) 
+            val = row[text_index]
+            if val is not None:
+                contexts.append(str(val)) 
             
     return "\n".join(contexts)
 
