@@ -3,8 +3,23 @@ from databricks_langchain import ChatDatabricks
 from langchain_community.vectorstores import DatabricksVectorSearch
 from databricks.ai_search.client import AISearchClient
 
-# 1. Setup Retrieval
-vsc = AISearchClient()
+from databricks.sdk import WorkspaceClient
+from databricks.ai_search.client import AISearchClient
+import os
+
+# 1. Initialize the WorkspaceClient
+# This automatically picks up credentials (environment variables or instance profile)
+w = WorkspaceClient()
+
+# 2. Get the workspace URL from the client
+workspace_url = f"https://{w.config.host}"
+
+# 3. Initialize AISearchClient using the host and the client's token provider
+# This avoids manual credential management
+vsc = AISearchClient(
+    workspace_url=workspace_url,
+    token=w.config.token
+)
 vector_search_index = vsc.get_index(
     endpoint_name="my_vector_search_endpoint",
     index_name="gg_test.dev.my_text_index"
